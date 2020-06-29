@@ -1,0 +1,276 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.masterthesis.examples</groupId>
+  <artifactId>masterthesis-example</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>masterthesis-example</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <junit.version>4.11</junit.version>
+    <build.number.version>1.4</build.number.version>
+    <maven.build.timestamp.format>dd.MM.yyyy HH:mm</maven.build.timestamp.format>
+    <projectVersion>${project.version}</projectVersion>
+    <build.number>1.0</build.number>
+    <mvvm.stable.version>1.7.0</mvvm.stable.version>
+    <javafx.jar.plugin.version>8.8.3</javafx.jar.plugin.version>
+    <dimdoe.lib.version>0.0.4</dimdoe.lib.version>
+    <logback.version>1.1.2</logback.version>
+    <control.fx.version>8.40.12</control.fx.version>
+  </properties>
+
+  <!--
+      If you have access to scm then you can place actual url's.
+      Otherwise with <revisionOnScmFailure /> you can give some fake URLs as follows.
+      -->
+  <scm>
+    <connection>scm:svn:http://none</connection>
+    <developerConnection>scm:svn:https://none</developerConnection>
+    <url>scm:svn:https://none</url>
+  </scm>
+
+<dependencies>
+    <dependency>
+      <groupId>fra.uas.de</groupId>
+      <artifactId>DimDoELib</artifactId>
+      <version>${dimdoe.lib.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.saxsys</groupId>
+      <artifactId>mvvmfx-guice</artifactId>
+      <version>${mvvm.stable.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+      <version>1</version>
+    </dependency>
+  	<dependency>
+	    <groupId>org.jfree</groupId>
+	    <artifactId>jfreechart-fx</artifactId>
+	    <version>1.0.1</version>
+	</dependency>
+	<dependency>
+        <groupId>org.knowm.xchart</groupId>
+        <artifactId>xchart</artifactId>
+        <version>3.5.2</version>
+    </dependency>
+    <dependency>
+      <groupId>de.saxsys</groupId>
+      <artifactId>mvvmfx</artifactId>
+      <version>${mvvm.stable.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>${logback.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.controlsfx</groupId>
+      <artifactId>controlsfx</artifactId>
+      <version>${control.fx.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.jzy3d</groupId>
+        <artifactId>jzy3d-api</artifactId>
+        <version>0.9.2-SNAPSHOT</version>
+    </dependency>
+	<dependency>
+        <groupId>org.jzy3d</groupId>
+        <artifactId>jzy3d-api</artifactId>
+        <version>1.0.3-SNAPSHOT</version>
+    </dependency>
+  <dependency>
+    <groupId>org.jzy3d</groupId>
+    <artifactId>jzy3d-javafx</artifactId>
+    <version>1.0.2</version>
+  </dependency>
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.10</version>
+		<scope>test</scope>
+	</dependency>
+  <dependency>
+    <groupId>org.jzy3d</groupId>
+    <artifactId>jzy3d-master</artifactId>
+    <version>1.0.2</version>
+  </dependency>
+</dependencies>
+
+  <repositories>
+	  <repository>
+	     <id>jzy3d-snapshots</id>
+	     <name>Jzy3d Snapshots</name>
+	     <url>http://maven.jzy3d.org/snapshots</url>
+	  </repository>
+	  <repository>
+	     <id>jzy3d-releases</id>
+	     <name>Jzy3d Releases</name>
+	     <url>http://maven.jzy3d.org/releases</url>
+	  </repository>
+      <repository>
+        <id>jzy3d-releases</id>
+        <name>Jzy3d Releases</name>
+        <url>http://maven.jzy3d.org/releases</url>
+      </repository>
+  </repositories>
+  <!--
+  #####
+  BUILD PROFILES
+  #####  -->
+  <profiles>
+
+    <profile>
+        <id>dev</id>
+        <activation>
+          <activeByDefault>true</activeByDefault>
+        </activation>
+      <build>
+        <defaultGoal>clean,install</defaultGoal>
+      </build>
+      <properties>
+        <build.number>1</build.number>
+        <build.profile>dev</build.profile>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>production</id>
+      <build>
+        <plugins>
+          <!--
+      BUILD NUMBER PLUGIN
+      -->
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>buildnumber-maven-plugin</artifactId>
+            <version>${build.number.version}</version>
+            <executions>
+              <execution>
+                <phase>validate</phase>
+                <goals>
+                  <goal>create</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <format>{0}</format>
+              <items>
+                <item>buildNumber</item>
+              </items>
+              <revisionOnScmFailure>no.scm.config.in.pom</revisionOnScmFailure>
+            </configuration>
+
+          </plugin>
+
+        </plugins>
+      </build>
+      <properties>
+        <build.number>${buildNumber}</build.number>
+        <build.profile>production</build.profile>
+      </properties>
+    </profile>
+  </profiles>
+
+  <build>
+    <finalName>${project.artifactId}-${project.version}</finalName>
+
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*.fxml</include>
+          <include>**/*.css</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*.xml</include>
+          <include>*.properties</include>
+        </includes>
+      </resource>
+    </resources>
+<plugins>
+  <!--
+             jAVAFX jAR PLUGIN
+          -->
+
+  <plugin>
+    <executions>
+      <execution>
+        <phase>install</phase>
+        <goals>
+          <goal>build-jar</goal>
+        </goals>
+      </execution>
+    </executions>
+
+    <groupId>com.zenjava</groupId>
+    <artifactId>javafx-maven-plugin</artifactId>
+    <version>${javafx.jar.plugin.version}</version>
+    <configuration>
+      <jfxMainAppJarName>${project.artifactId}-${project.version}.jar</jfxMainAppJarName>
+      <mainClass>com.umesoft.de.doediva.DoeDivaApp</mainClass>
+    </configuration>
+  </plugin>
+
+</plugins>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.7.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.20.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+
+
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
