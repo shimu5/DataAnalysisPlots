@@ -14,7 +14,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <junit.version>4.11</junit.version>
+    <junit.version>4.13.1</junit.version>
     <build.number.version>1.4</build.number.version>
     <maven.build.timestamp.format>dd.MM.yyyy HH:mm</maven.build.timestamp.format>
     <projectVersion>${project.version}</projectVersion>
@@ -106,7 +106,7 @@
 	<dependency>
 		<groupId>junit</groupId>
 		<artifactId>junit</artifactId>
-		<version>4.10</version>
+		<version>4.13.1</version>
 		<scope>test</scope>
 	</dependency>
   <dependency>
